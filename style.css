@@ -1,0 +1,224 @@
+/*
+  ことばの巣 サポートサイト。
+
+  **外部のリソースを1つも読み込まない。**
+  Web フォントも解析タグも CDN も使わない。
+  「広告なし・トラッキングなし」と書いているページ自身が
+  第三者に足跡を渡していたら、書いていることと矛盾する。
+*/
+
+:root {
+  --bg: #fbf8f3;
+  --surface: #ffffff;
+  --text: #2b2723;
+  --muted: #6b625a;
+  --line: #e6ded2;
+  --accent: #8a5a2b;
+  --accent-weak: #f2e8da;
+  --warn-bg: #fdf3e3;
+  --warn-line: #e0b978;
+  --measure: 42rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16130f;
+    --surface: #1f1b16;
+    --text: #ece5db;
+    --muted: #a89c8d;
+    --line: #332c24;
+    --accent: #d9a566;
+    --accent-weak: #2a2119;
+    --warn-bg: #2a2015;
+    --warn-line: #7a5a2a;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  /* iOS の横向きで文字が勝手に大きくならないようにする。 */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+               "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  /* 語釈を読むアプリのサイトなので、行送りは本文寄りに広く取る。 */
+  line-height: 1.9;
+  font-size: 17px;
+  /* 長い英数字（URL・識別子）で右にはみ出さないための保険。
+     **`anywhere` ではなく `break-word`。**
+     `anywhere` は入る余地があっても単語の途中で切るため、
+     英単語の混じった行が読みにくくなる。 */
+  overflow-wrap: break-word;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 20px 96px;
+}
+
+header.site {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  padding: 28px 0 22px;
+  margin-bottom: 40px;
+}
+
+header.site .wrap { padding-bottom: 0; }
+
+.brand {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0 0 4px;
+}
+
+.brand a { color: inherit; text-decoration: none; }
+
+.tagline {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+nav.site {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 0.92rem;
+}
+
+nav.site a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+}
+
+nav.site a:hover { border-bottom-color: var(--accent); }
+nav.site a[aria-current="page"] { color: var(--text); font-weight: 600; }
+
+h1 {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: 1.9rem;
+  line-height: 1.5;
+  margin: 0 0 8px;
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  font-size: 1.18rem;
+  margin: 44px 0 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  letter-spacing: 0.02em;
+}
+
+h3 { font-size: 1rem; margin: 28px 0 8px; }
+
+p, li { margin: 0 0 14px; }
+ul, ol { padding-left: 1.3em; }
+li { margin-bottom: 8px; }
+
+a { color: var(--accent); }
+
+.lead {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 32px;
+}
+
+.updated {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0 36px;
+}
+
+/* 要点を強く出すための箱。多用しない。 */
+.note {
+  background: var(--accent-weak);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  margin: 24px 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.note p:last-child, .faq p:last-child { margin-bottom: 0; }
+
+/* 公開前に埋める箇所。**目に痛い色にしておく。**
+   埋め忘れたまま公開すると、そのまま審査に出てしまう。 */
+.todo {
+  background: var(--warn-bg);
+  border: 1px dashed var(--warn-line);
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-weight: 600;
+  font-size: 0.92em;
+}
+
+.faq {
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+
+.faq:last-of-type { border-bottom: none; }
+
+.faq h3 {
+  margin: 0 0 8px;
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  font-size: 0.93rem;
+}
+
+th, td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 12px 10px 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* **`white-space: nowrap` を使わない。**
+   「お気に入り・タグ・メモ」のような長い見出しが折り返せず、
+   狭い画面で表が右にはみ出す。 */
+th { color: var(--muted); font-weight: 600; width: 36%; }
+
+/* iPhone SE 相当（320px）でも表がはみ出さないようにする。 */
+@media (max-width: 380px) {
+  body { font-size: 16px; }
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  th, td { display: block; width: auto; padding-right: 0; }
+  th { border-bottom: none; padding-bottom: 0; }
+  td { padding-top: 2px; }
+}
+
+footer.site {
+  border-top: 1px solid var(--line);
+  margin-top: 64px;
+  padding-top: 24px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+footer.site a { color: var(--muted); }
+
+code {
+  background: var(--accent-weak);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["DJ7VR35KC8.com.muranaka.kotobanosu"],
+        "components": [
+          { "/": "/word/*", "comment": "語釈を開く" },
+          { "/": "/search", "?": { "q": "?*" }, "comment": "検索する" },
+          { "/": "/search/*", "comment": "検索する（パス形式）" },
+          { "/": "/tab/*", "comment": "タブを開く" },
+          { "/": "/scan", "comment": "カメラで読み取る" }
+        ]
+      }
+    ]
+  }
+}
